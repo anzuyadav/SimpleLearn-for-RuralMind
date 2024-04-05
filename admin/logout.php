@@ -1,0 +1,1 @@
+<h1>Admin LOGOUT</h1>
