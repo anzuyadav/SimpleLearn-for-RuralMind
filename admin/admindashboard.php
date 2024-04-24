@@ -4,15 +4,23 @@ if(!isset($_SESSION)){
     session_start();
 }
 
+define('TITLE', 'Dashboard');
+define('PAGE', 'dashboard');
 include('./admininclude/header.php');
-//include('../database.php');
+include('../database.php');
 
 if(isset($_SESSION['is_adminlogin'])){
 $adminEmail = $_SESSION['adminLogEmail'];
 }else{
     echo "<script> location.href='../index.php'; </script>";
 }
+$sql = "SELECT * FROM course";
+$result = $conn->query($sql);
+$totalcourse = $result->num_rows;
 
+ $sql = "SELECT * FROM student";
+$result = $conn->query($sql);
+$totalstu = $result->num_rows;
 ?>
             <div class="col-sm-9 mt-5">
                 <div class="row mx-5 text-center">
@@ -22,9 +30,9 @@ $adminEmail = $_SESSION['adminLogEmail'];
                             <div class="card-header"> Courses</div>
                             <div class="card-body">
                                 <h4 class="card-tittle">
-                                    25
+                                    <?php echo $totalcourse; ?>
                                 </h4>
-                                <a class="btn text-white" href="#">View</a>
+                                <a class="btn text-white" href="courses.php">View</a>
                             </div>
                         </div>
                     </div>
@@ -34,9 +42,9 @@ $adminEmail = $_SESSION['adminLogEmail'];
                             <div class="card-header"> Student</div>
                             <div class="card-body">
                                 <h4 class="card-tittle">
-                                    15
+                                    <?php echo $totalstu; ?>
                                 </h4>
-                                <a class="btn text-white" href="#">View</a>
+                                <a class="btn text-white" href="Students.php">View</a>
                             </div>
                         </div>
                     </div>

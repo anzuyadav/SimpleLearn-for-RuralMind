@@ -87,3 +87,16 @@ a.social-hover:hover {
   text-decoration: none;
   background-color: rgb(60, 60, 105);
 }
+
+.course-card {
+  max-height: 400px; /* Adjust the maximum height as needed */
+  display: grid;
+  flex-direction: column;
+}
+.course-card .card-body {
+  flex-grow: 1;
+}
+.course-card .card-img-top {
+  height: 150px; /* Adjust image height as needed */
+  object-fit: cover; /* This will ensure images cover the area properly */
+}

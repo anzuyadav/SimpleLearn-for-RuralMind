@@ -1,7 +1,20 @@
 <!-- Start including header -->
 <?php
+if(!isset($_SESSION)){ 
+    session_start(); 
+}
+
+
 include('./database.php');
 include('./Mainfh/header.php');
+
+if(isset($_POST['checkmail']) && isset($_POST['stuemail'])){
+    $stuemail = $_POST['stuemail'];
+    $sql ="SELECT student_email FROM student WHERE student_email = '".$stuemail."'";
+    $result = $conn->query($sql);
+    $row = $result->num_rows;
+    echo json_encode($row);
+}
 ?>
 <!-- End including header -->
 
@@ -20,6 +33,7 @@ include('./Mainfh/header.php');
     <div class="row">
         <div class="col-md-4">    
         <h5 class="mb-3">If Already Registered !! Login</h5>
+        
         <form role="form" id="stuLoginForm">
             <div class="form-group">
                 <i class="fas fa-envelope"></i><label for="stuLogEmail" class="pl-2 font-weight-bold">Email</label><small id="statusLogMsg1"></small><input type="email"
@@ -32,6 +46,8 @@ include('./Mainfh/header.php');
         </form><br/>
         <small id="statusLogMsg"></small>
         </div>
+        
+
         <div class="col-md-6 offset-md-1">
         <h5 class="mb-3">New User !! Sign Up</h5>
             <form role="form" id="stuRegForm">
@@ -50,7 +66,7 @@ include('./Mainfh/header.php');
                 </div>
                 <button type="button" class="btn btn-primary" id="signup" onclick="addStu()">Sign Up</button>
             </form> <br/>
-            <small id="successMsg"></small>
+            <small id="successMessage"></small>
         </div>
     </div>
 </div>

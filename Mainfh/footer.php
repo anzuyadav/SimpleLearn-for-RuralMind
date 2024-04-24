@@ -83,8 +83,6 @@
 
 <!-- Start Admin Login Modal -->
 
-
-
 <!-- Modal -->
 <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

@@ -6,7 +6,7 @@ if(isset($_REQUEST['courseSubmitbtn'])){
     //checking for empty field
     if(($_REQUEST['course_name'] == "") || ($_REQUEST['course_desc'] == "") ||
     ($_REQUEST['course_author'] == "") || ($_REQUEST['course_duration'] == "") ||
-    ($_REQUEST['course_orgprice'] == "") || ($_REQUEST['course_price'] == "")){
+    ($_REQUEST['coAurse_orgprice'] == "") || ($_REQUEST['course_price'] == "")){
         $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2">Fill 
         All Fields</div>';
     } else {

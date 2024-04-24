@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="../css/all.min.css">
 
     <!-- Google font-->
-    <link  href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    
 
     <!-- custom css-->
     <link rel="stylesheet" href="../css/adminstyle.css">
@@ -56,13 +57,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="sellreport.php">
                                 <i class="fas fa-table"></i>
                                 Sell Report
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="paymentstatus.php">
                                 <i class="fas fa-table"></i>
                                 Payment Status
                             </a>

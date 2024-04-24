@@ -1,56 +1,94 @@
 <?php 
-include 'settingEsewa.php';
-// include('./database.php');
-// session_start();
-//     if(!isset($_SESSION['stuLogEmail'])) {
-//     echo "<script> location.href='logorSign.php'; </script>";
-//     } else {
-//     $stuEmail = $_SESSION['stuLogEmail'];
+include('./database.php');
+session_start();
+ if(!isset($_SESSION['stuLogEmail'])) {
+  echo "<script> location.href='logorsign.php'; </script>";
+ } else {
+  $stuEmail = $_SESSION['stuLogEmail'];
+  ?>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" type="text/css" href="css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
     
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-
     <title>Checkout</title>
-</head>
-<body>
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 
+  </head>
+  <body>
 
-<div class ="container mt-5">
+  <div class="container mt-5">
     <div class="row">
     <div class="col-sm-6 offset-sm-3 jumbotron">
-    <h3 class="mb-5">Welcome to SimpleLearn Payment Page</h3>
-    <form action="<?php echo $epay_url ?>" method="POST">
-    <input type="text" id="amount" name="amount" value="100" required>
-    <input type="text" id="tax_amount" name="tax_amount" value ="10" required>
-    <input type="text" id="total_amount" name="total_amount" value="110" required>
-    <input type="text" id="transaction_uuid" name="transaction_uuid"required>
-    <input type="text" id="product_code" name="product_code" value ="<?php echo $orderID ?>" required>
-    <input type="text" id="product_service_charge" name="product_service_charge" value="0" required>
-    <input type="text" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
-    <input type="text" id="success_url" name="success_url" value="<?php echo $successurl?>" required>
-    <input type="text" id="failure_url" name="failure_url" value="<?php echo $failedurl?>" required>
-    <input type="text" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
-    <input type="text" id="signature" name="signature" required>
-    <input value="Submit" type="submit">
-    </form> 
-    </div> 
-    </div> 
-</div>  
+    <h3 class="mb-5">Welcome to E-Learning Payment Page</h3>
+    <form method="post" action="./khalti.php" id="myform">
+      <div class="form-group row">
+       <label for="ORDER_ID" class="col-sm-4 col-form-label">Order ID</label>
+       <div class="col-sm-8">
+         <input id="ORDER_ID" class="form-control" tabindex="1" maxlength="20" size="20" name="ORDER_ID" autocomplete="off"
+          value="<?php echo  "ORDS" . rand(10000,99999999)?>" readonly>
+       </div>
+      </div>
+      <div class="form-group row">
+       <label for="CUST_ID" class="col-sm-4 col-form-label">Student Email</label>
+       <div class="col-sm-8">
+         <input id="CUST_ID" class="form-control" tabindex="2" maxlength="12" size="12" name="CUST_ID" autocomplete="off" value="<?php if(isset($stuEmail)){echo $stuEmail; }?>" readonly>
+       </div>
+      </div>
+      <div class="form-group row">
+       <label for="TXN_AMOUNT" class="col-sm-4 col-form-label">Amount</label>
+       <div class="col-sm-8">
+        <input title="TXN_AMOUNT" class="form-control" tabindex="10"
+          type="text" name="TXN_AMOUNT" value="<?php if(isset($_POST['id'])){echo $_POST['id']; }?>" readonly>
+       </div>
+      </div>
+      <div class="text-center">
+        <!-- Set up a container element for the button -->
 
 
-<!-- jQuery library -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+        
+          <input value="Checkout" type="submit" class="btn btn-primary" onclick="">
+          <a href="./course.php" class="btn btn-secondary">Cancel</a>
+      </div>
+     </form>
+     <small class="form-text text-muted">Note: Complete Payment by Clicking Checkout Button</small>
+     </div>
+    </div>
+  </div>
 
-<!-- Popper JS -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+  
+  <!-- Place this where you need payment button -->
+  
+    <!-- Place this where you need payment button -->
+    <!-- Paste this code anywhere in you body tag -->
+   
+    <!-- Jquery and Boostrap JavaScript -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome JS -->
+    <script type="text/javascript" src="js/all.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script type="text/javascript" src="js/custom.js"></script>
+
+  </body>
+  </html>
+ <?php } ?>
+

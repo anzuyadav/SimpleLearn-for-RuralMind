@@ -11,39 +11,65 @@ include('../database.php');
     }else{
         echo "<script> location.href='../index.php'; </script>";
     }
+
+    // Fetch courses for the dropdown
+$sql = "SELECT course_ID, course_name FROM course"; // Ensure your table and column names are correct
+$result = $conn->query($sql);
+$courses = [];
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $courses[] = $row;
+    }
+}
+
+if (isset($_REQUEST['searchBtn']) && !empty($_REQUEST['selectedCourse'])) {
+    [$course_ID, $course_name] = explode(' - ', $_REQUEST['selectedCourse']);
+    $_SESSION['course_ID'] = $course_ID;
+    $_SESSION['course_name'] = $course_name;
+    // Now you can use the course ID to fetch related lessons or perform other actions
+}
 ?>
 
+
+
 <div class="col-sm-9 mt-5 mx-3">
-    <form action="" class="mt-3 form-inline d-print-none">
+    <form action="" class="mt-3 form-inline d-print-none" method="post">
         <div class="form-group mr-3">
-            <label for="checkid">Enter Course ID:</label>
-            <input type="text" class="form-control ml-3" id="checkid"
-            name="checkid">
+            <label for="selectedCourse">Select Course:</label>
+            <select class="form-control ml-3" id="selectedCourse" name="selectedCourse">
+                <option value="">Select Course</option>
+                <?php foreach ($courses as $course) : ?>
+                    <option value="<?php echo htmlspecialchars($course['course_ID'] . ' - ' . $course['course_name']); ?>">
+                        <?php echo htmlspecialchars($course['course_ID'] . ' - ' . $course['course_name']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
-        <button type="submit" class="btn btn-danger">Search</button>
+        <button type="submit" class="btn btn-danger" name="searchBtn">Search</button>
     </form>
 
     <?php 
 
-        $sql = "SELECT course_ID FROM course";
-        $result = $conn->query($sql);
-        while($row = $result->fetch_assoc()){
-            if(isset($_REQUEST['checkid']) && $_REQUEST['checkid'] == $row
-            ['course_ID']){
-                $sql = "SELECT * FROM course WHERE course_ID = {$_REQUEST['checkid']}";
-                $result = $conn->query($sql);
-                $row = $result->fetch_assoc();
-                if(($row['course_ID']) == $_REQUEST['checkid']){
-                    $_SESSION['course_ID'] = $row['course_ID'];
-                    $_SESSION['course_name'] = $row['course_name'];
-                    ?>
-                    <h3 class="mt-5 bg-dark text-white p-2">Course ID: <?php if(isset($row['course_ID'])) {
-                        echo $row['course_ID']; } ?> Course Name: <?php if(isset($row['course_name'])) {
-                            echo $row['course_name']; } ?> </h3>
-                <?php
+if (isset($_REQUEST['searchBtn']) && !empty($_REQUEST['selectedCourse'])) {
+    // Extracting the Course ID from the selected option
+    list($course_id, $course_name) = explode(' - ', $_REQUEST['selectedCourse'], 2);
 
-                $sql = "SELECT * FROM lesson WHERE course_ID = {$_REQUEST['checkid']}";
-                $result = $conn->query($sql);
+    $sql = "SELECT * FROM course WHERE course_ID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $course_ID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        $_SESSION['course_ID'] = $row['course_ID'];
+        $_SESSION['course_name'] = $row['course_name'];
+        ?>
+        <h3 class="mt-5 bg-dark text-white p-2">Course ID: <?php echo $row['course_ID']; ?> Course Name: <?php echo $row['course_name']; ?> </h3>
+    <?php
+    $sql = "SELECT * FROM lesson WHERE course_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $course_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
                 echo '<table class="table">
                     <thread>
                         <tr>
@@ -99,7 +125,7 @@ include('../database.php');
                 }
             }
             }   
-        }
+        
     
     ?>
 </div>
